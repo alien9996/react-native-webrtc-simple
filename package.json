@@ -29,11 +29,13 @@
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "devDependencies": {
+    "@types/react-native-incall-manager": "^3.2.1",
     "react": "*",
     "react-native": "*"
   },
   "dependencies": {
-    "rxjs": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "react-native-incall-manager": "^3.3.0",
+    "rxjs": "*"
   }
 }

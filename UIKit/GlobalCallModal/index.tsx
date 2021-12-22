@@ -10,6 +10,7 @@ import WebrtcSimple from '../../index';
 import { CallEvents } from '../../WebRtcSimple/contains';
 import { Timer } from './../index';
 import { styles } from './styles';
+import InCallManager from 'react-native-incall-manager';
 
 let interval: any = null;
 const ringtime = 20;
@@ -44,6 +45,7 @@ const GlobalCallUI = React.forwardRef((props, ref) => {
   });
 
   useEffect(() => {
+    InCallManager.setSpeakerphoneOn(true)
     WebrtcSimple.listenings.getRemoteStream((remoteStream) => {
       setRemoteStream(remoteStream);
     });
@@ -167,6 +169,7 @@ const GlobalCallUI = React.forwardRef((props, ref) => {
         {(type === CallEvents.start || type === CallEvents.received) && <Timer style={styles.timer} textStyle={styles.textTimer} start />}
         {type === CallEvents.accept && remoteStream && (
           <View style={{ flex: 1 }}>
+            <RTCView mirror={remoteCameraType === 'front' ? true : false} streamURL={remoteStream.toURL()} zOrder={99} style={styles.stream} objectFit="cover" />
             {stream && (
               <View style={styles.boxMyStream}>
                 <RTCView mirror={cameraType === 'front' ? true : false} streamURL={stream.toURL()} zOrder={999} style={styles.myStream} objectFit="cover" />
@@ -181,7 +184,6 @@ const GlobalCallUI = React.forwardRef((props, ref) => {
               </View>
             )}
 
-            <RTCView mirror={remoteCameraType === 'front' ? true : false} streamURL={remoteStream.toURL()} zOrder={99} style={styles.stream} objectFit="cover" />
           </View>
         )}
         {type === CallEvents.start && (
